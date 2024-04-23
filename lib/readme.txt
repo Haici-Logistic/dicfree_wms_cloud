@@ -1,0 +1,3 @@
+mvn install:install-file "-Dfile=xxxx\yqfw-common-core-0.0.3-SNAPSHOT.jar" "-DgroupId=cn.jzyunqi" "-DartifactId=yqfw-common-core" "-Dversion=0.0.3-SNAPSHOT" "-Dpackaging=jar"
+mvn install:install-file "-Dfile=xxxx\yqfw-dicfree-boot-0.0.3-SNAPSHOT.jar" "-DgroupId=cn.jzyunqi" "-DartifactId=yqfw-dicfree-boot" "-Dversion=0.0.3-SNAPSHOT" "-Dpackaging=jar"
+mvn install:install-file "-Dfile=xxxx\yqfw-spring-boot-starter-0.0.3-SNAPSHOT.jar" "-DgroupId=cn.jzyunqi" "-DartifactId=yqfw-spring-boot-starter" "-Dversion=0.0.3-SNAPSHOT" "-Dpackaging=jar"

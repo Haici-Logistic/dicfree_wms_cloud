@@ -1,0 +1,247 @@
+server:
+  servlet:
+    context-path: /api
+  port: 8081
+  error:
+    include-stacktrace: ALWAYS #错误堆栈打印
+spring:
+#  profiles:
+#    active: dev
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration #不需要启动该类
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: admin-api  #应用名称
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1MB
+      max-request-size: 10MB
+  web:
+    locale: en
+    resources:
+      static-locations: classpath:/static/,file:/e:/data/upload
+  mvc:
+    static-path-pattern: /static/**
+    log-request-details: true
+  freemarker:
+    enabled: false
+    cache: false
+    template-loader-path: classpath:/templates/,file:/e:/data/upload/
+    expose-spring-macro-helpers: false
+    suffix: .ftl
+    content-type: text/html
+    charset: UTF-8
+    settings:
+      template_update_delay: 0
+      locale: zh_CN
+      number_format: 0.##########
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      classic_compatible: false
+      template_exception_handler: ignore
+  datasource:
+    url: jdbc:mysql://localhost:3306/dicfree?characterEncoding=UTF-8&useUnicode=true&autoReconnect=true&rewriteBatchedStatements=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count核数 * 2) + effective_spindle_count磁盘列阵中的硬盘数)
+      minimum-idle: 10 #最小空闲连接
+      max-lifetime: 28700000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired）
+      idle-timeout: 600000 #多长空闲时间之后回收空闲连接，必须大于10000毫秒，默认600000毫秒
+      connection-timeout: 60000 #等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException
+      read-only: false #连接只读数据库时配置为true， 保证安全
+      pool-name: ${spring.application.name}-yqfw-dbPool #线程池连接名字
+      connection-init-sql: SELECT 1 #连接初始化测试sql
+      connection-test-query: SELECT 1 #验证连接有效性的sql
+      validation-timeout: 5000 #验证连接有效性的超时时间
+  data:
+    jpa:
+      repositories:
+        enabled: true
+        bootstrap-mode: DEFERRED
+    redis:
+      repositories:
+        enabled: true
+    web:
+      pageable:
+        one-indexed-parameters: true #分页从1开始
+        default-page-size: 10 #每页默认10条
+        max-page-size: 300 #最大300条
+  jpa:
+    database-platform: cn.jzyunqi.common.support.hibernate.dialect.MySQLDialectPlus
+    generate-ddl: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate #validate（只校验）, update（生成并更新）
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    properties:
+      hibernate.format_sql: true
+      hibernate.globally_quoted_identifiers: true
+  redis:
+    redisson:
+      file: classpath:redisson.yml
+  messages:
+    cache-duration: PT30M
+    encoding: UTF-8
+    fallback-to-system-locale: true
+    use-code-as-default-message: true
+  jackson:
+    locale: zh_CN
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: NON_NULL
+    serialization:
+      INDENT_OUTPUT: false
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      ACCEPT_SINGLE_VALUE_AS_ARRAY: true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+      ACCEPT_EMPTY_STRING_AS_NULL_OBJECT: true
+    mapper:
+      SORT_PROPERTIES_ALPHABETICALLY: false
+    parser:
+      ALLOW_COMMENTS: true
+    generator:
+      WRITE_BIGDECIMAL_AS_PLAIN: true
+  task:
+    execution:
+      thread-name-prefix: ${spring.application.name}-yqfw-taskThread-
+      pool:
+        max-size: 8
+        queue-capacity: 50
+        keep-alive: 10s
+
+management:
+  endpoints: #主要分为3大类 1.应用配置类 2.度量指标类 3.操作控制类
+    web:
+      cors:
+        allowed-origins: '*'
+        allowed-methods: '*'
+        allowed-headers: '*'
+      exposure:
+        include: '*' #暴露全部spring监控项
+        exclude: #除了指定项不暴露
+  endpoint:
+    auditevents:
+      enabled: false
+    beans:
+      enabled: false
+    caches:
+      enabled: false
+    conditions:
+      enabled: false
+    configprops:
+      enabled: false
+    env:
+      enabled: false
+    flyway:
+      enabled: false
+    health:
+      enabled: false
+      show-details: WHEN_AUTHORIZED
+    httpexchanges:
+      enabled: false
+    info:
+      enabled: false
+    integrationgraph:
+      enabled: false
+    loggers:
+      enabled: false
+    liquibase:
+      enabled: false
+    metrics:
+      enabled: false
+    mappings:
+      enabled: false
+    quartz:
+      enabled: false
+    scheduledtasks:
+      enabled: false
+    sessions:
+      enabled: false
+    shutdown:
+      enabled: false
+    startup:
+      enabled: false
+    threaddump:
+      enabled: false
+    heapdump:
+      enabled: false
+    logfile:
+      enabled: false
+    prometheus:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-spring.yml
+
+df:
+  feature:
+    feie:
+      user: todo-xx-yy-zz
+      user-key: todo-xx-yy-zz
+      host: todo-xx-yy-zz
+    qingflow:
+      open-api-token: todo-xx-yy-zz
+      box-location-lock-notice-path: todo-xx-yy-zz
+      box-whole-location-assign-notice-path: todo-xx-yy-zz
+      box-bulk-location-assign-notice-path: todo-xx-yy-zz
+      box-sn-inbound-notice-path: todo-xx-yy-zz
+      box-sn-outbound-notice-path: todo-xx-yy-zz
+      box-sn-creation-notice-path: todo-xx-yy-zz
+      product-sn-inbound-notice-path: todo-xx-yy-zz
+      product-sn-outbound-notice-path: todo-xx-yy-zz
+      product-sn-creation-notice-path: todo-xx-yy-zz
+      product-sn-on-shelf-notice-path: todo-xx-yy-zz
+      product-sn-off-shelf-notice-path: todo-xx-yy-zz
+      product-delivery-order-add-notice-path: todo-xx-yy-zz
+      product-delivery-order-trace-notice-path: todo-xx-yy-zz
+      product-wave-task-weighing-notice-path: todo-xx-yy-zz
+      third-box-arrival-order-add-notice-path: todo-xx-yy-zz
+      third-box-delivery-order-add-notice-path: todo-xx-yy-zz
+      third-transport-order-add-notice-path: todo-xx-yy-zz
+      third-transport-order-trace-notice-path: todo-xx-yy-zz
+      third-courier-fast-line-trace-notice-path: todo-xx-yy-zz
+    lark:
+      app-id: todo-xx-yy-zz
+      app-key: todo-xx-yy-zz
+      app-token: todo-xx-yy-zz
+      table-id: todo-xx-yy-zz
+    c3x:
+      username: todo-xx-yy-zz
+      password: todo-xx-yy-zz
+      account-no: todo-xx-yy-zz
+    fast-line:
+      username: todo-xx-yy-zz
+      password: todo-xx-yy-zz
+      account-no: todo-xx-yy-zz
+
+yqfw:
+  scan:
+    controller: com.dicfree.ms.*.web
+    service: com.dicfree.ms.*.service
+    entity: com.dicfree.ms.*.repository.jpa.entity
+    dao: com.dicfree.ms.*.repository.jpa.dao
+    cacheType: com.dicfree.ms.*.common.constant
+    component: com.dicfree.ms.*.component
+  show-real-error: true
+  async-enable: true
+  auth-server-enable: true
+  multiple-login: false
+  multiple-login-reserved: 10
+  id-gen:
+    epoch: 2023-07-01
+    data-center-id: 0
+    worker-id: 0
+    special-prefix: T
+  feature:
+    oss:
+      third-type: SYSTEM
+      access-domain: http://localhost:${server.port}${server.servlet.context-path}/static
+      bucket:  E:/data/upload
+  download:
+    excel: true

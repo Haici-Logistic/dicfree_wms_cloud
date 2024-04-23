@@ -1,0 +1,9 @@
+threads: 0
+nettyThreads: 0
+codec:
+  class: org.redisson.codec.JsonJacksonCodec
+singleServerConfig:
+  address: redis://localhost:6379
+#  password:
+  database: 0
+  clientName: dicfree_redisson_client

@@ -1,0 +1,18 @@
+{
+  "projectName": "dicfree-doc",
+  "packageFilters": "com.dicfree.ms.*",
+  "serverUrl": "http://127.0.0.1:8081/api",
+  "serverEnv": "{{server}}/api",
+  "isStrict": true,
+  "sortByTitle": true,
+  "outPath": "E:\\data\\upload\\doc",
+  "responseBodyAdvice": {
+    "className": "cn.jzyunqi.common.model.RestResultDto"
+  },
+  "apiObjectReplacements": [
+    {
+      "className": "void",
+      "replacementClassName": "cn.jzyunqi.common.model.RestResultDto"
+    }
+  ]
+}
